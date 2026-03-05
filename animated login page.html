@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #be2edd;
+    overflow: hidden;
+}
+
+button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 150px;
+    height: 50px;
+    background: #fff;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #be2edd;
+    font-weight: 500;
+    z-index: 1;
+    transform-origin: bottom right;
+    transition: 1.5s ease-in-out;
+}
+
+button.active {
+    transform: scale(0);
+}
+
+.wrapper {
+    position: relative;
+    width: 400px;
+    height: 500px;
+}
+
+.form-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    transform: translate(500px, -200px) scale(0);
+    transition: transform .5s ease-in-out, background 0s, left .5s ease-in-out;
+}
+.wrapper.active .form-wrapper {
+    transition-delay: 1s, 1.8s, 0s;
+    background: #fff;
+    transform: translate(0, 0) scale(1);
+    border-radius: 20px;
+}
+
+.wrapper.show-sign .form-wrapper.sign-in {
+    left: -850px;
+    transition-delay: 0s;
+}
+
+.wrapper .form-wrapper.sign-up {
+    transform: translateX(850px);
+    transition-delay: 0s;
+}
+
+.wrapper.show-sign .form-wrapper.sign-up {
+    transform: translateX(0);
+}
+
+h2 {
+    font-size: 30px;
+    color: #be2edd;
+    text-align: center;
+}
+
+.input-group {
+    position: relative;
+    margin: 30px 0;
+}
+
+.input-group label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #333;
+    padding: 0 5px;
+    pointer-events: none;
+    transition: .5s;
+}
+.input-group input {
+    width: 320px;
+    height: 40px;
+    font-size: 16px;
+    color: #333;
+    padding: 0 10px;
+    background: transparent;
+    border: 1px solid #333;
+    outline: none;
+    border-radius: 5px;
+    transition: .5s;
+}
+
+.input-group input:focus~label,
+.input-group input:valid~label {
+    top: 0;
+    font-size: 12px;
+    background: #fff;
+    color: #be2edd;
+}
+
+.input-group input:focus,
+.input-group input:valid {
+    border: 1px solid #be2edd;
+}
+
+.remember {
+    margin: -15px 0 15px;
+}
+
+.remember label {
+    color: #333;
+    font-size: 14px;
+}
+
+.remember label input {
+    accent-color: #be2edd;
+}
+
+.btn {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: #be2edd;
+    box-shadow: 0 5px 10px #be2edd;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+.sign-link {
+    font-size: 14px;
+    text-align: center;
+    margin: 25px 0;
+}
+
+.sign-link p {
+    color: #333;
+}
+
+.sign-link p a {
+    color: #be2edd;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.sign-link p a:hover {
+    text-decoration: underline;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: #be2edd;
+    border-radius: 50%;
+    text-decoration: none;
+    box-shadow: 0 5px 10px #be2edd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close i {
+    font-size: 20px;
+    color: #fff;
+}
+
+.wrapper span {
+    display: block;
+    width: 400px;
+    height: 50px;
+    background: #fff;
+    transform: translate(400px, -50px) scale(0);
+    transform-origin: right;
+    margin-bottom: -50px;
+    transition: .5s ease-in-out;
+    transition-delay: calc(.5s / var(--i));
+}
+
+.wrapper span:nth-of-type(1) {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.wrapper.active span {
+    transition-delay: calc(.1s * var(--i));
+    margin-bottom: 0;
+    transform: translate(0, 0) scale(1);
+}
+
+.wrapper span:nth-of-type(10) {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.bg {
+  position: absolute;
+  width: 400px;
+  height: 500px;
+  background: #be2edd;
+}
+
+.wrapper.show-bg .bg {
+  z-index: 1;
+}
+
+    </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body>
+
+    <button class="toggle-login" style="margin-right: 200px;">Login</button>
+
+    <div class="wrapper">
+    <div class="form-wrapper sign-in">
+      <a href="#" class="close"><i class="fa-solid fa-xmark"></i></a>
+        <form action="">
+            <h2>Login</h2>
+
+            <div class="input-group">
+                <input type="text" required>
+                <label for="">Username</label>
+            </div>
+
+            <div class="input-group">
+                <input type="password" required>
+                <label for="">Password</label>
+            </div>
+
+            <div class="remember">
+                <label>
+                    <input type="checkbox"> Remember me
+                </label>
+            </div>
+
+            <button type="submit" class="btn">Login</button>
+
+            <div class="sign-link">
+                <p>
+                    Don't have an account?
+                    <a href="#" class="signUp-link">Sign Up</a>
+                </p>
+            </div>
+
+        </form>
+    </div>
+
+
+      <div class="form-wrapper sign-up">
+        <form action="">
+            <h2>Sign up</h2>
+
+            <div class="input-group">
+                <input type="text" required>
+                <label for="">Username</label>
+            </div>
+
+             <div class="input-group">
+                <input type="Email" required>
+                <label for="">Email</label>
+            </div>
+
+            <div class="input-group">
+                <input type="password" required>
+                <label for="">Password</label>
+            </div>
+
+            <div class="remember">
+                <label>
+                    <input type="checkbox"> I agree to the terms & conditions
+                </label>
+            </div>
+
+            <button type="submit" class="btn">Sign Up</button>
+
+            <div class="sign-link">
+                <p>
+                    Already have an account?
+                    <a href="#" class="signIn-link">Sign In</a>
+                </p>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="bg"></div>
+  <span style="--i:10;"></span>
+  <span style="--i:9;"></span>
+  <span style="--i:8;"></span>
+  <span style="--i:7;"></span>
+  <span style="--i:6;"></span>
+  <span style="--i:5;"></span>
+  <span style="--i:4;"></span>
+  <span style="--i:3;"></span>
+  <span style="--i:2;"></span>
+  <span style="--i:1;"></span>
+
+</div>
+
+<script>
+    const wrapper = document.querySelector('.wrapper');
+const signUpLink = document.querySelector('.signUp-link');
+const signInLink = document.querySelector('.signIn-link');
+const toggleLogin = document.querySelector('.toggle-login');
+const close = document.querySelector('.close');
+
+signUpLink.addEventListener('click', () => {
+    wrapper.classList.toggle('show-sign');
+    wrapper.classList.add('show-bg');
+});
+
+signInLink.addEventListener('click', () => {
+    wrapper.classList.toggle('show-sign');
+    wrapper.classList.add('show-bg');
+});
+
+toggleLogin.addEventListener('click', () => {
+    toggleLogin.classList.toggle('active');
+    wrapper.classList.toggle('active');
+});
+
+close.addEventListener('click', () => {
+    toggleLogin.classList.toggle('active');
+    wrapper.classList.toggle('active');
+    wrapper.classList.remove('show-bg');
+});
+</script>
+
+</body>
+</html>
